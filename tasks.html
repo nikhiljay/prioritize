@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<head>
+		<title>Prioritize</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.scrolly.min.js"></script>
+        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-wide.css" />
+		</noscript>
+	</head>
+<section id="tasks" class="main">
+    <header>
+        <div class="container">
+            <h2>Pending Tasks</h2>
+            <div class="row">
+				<div class="12u">
+				    <ul class="actions">
+                    <li><a class="button alt" href="index.html">Home</a></li>
+                    <li><input type="none" class="button" value="Logout" onclick = "logout()" /></li>
+                    <li><a class="button alt" href="add.html">Add Event</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <body>
+        <center>
+            <span id="events"></span>
+        </center>
+    </body>
+    
+</section>
+
+
+<script>
+Parse.initialize("I6d6qWhllid82u0RbaoMHLZgrDOXRKKif2WLPzCe", "zTOyz7iuSIi1myASKudnfO1QyM1F8TLUa2S9XJIV"); 
+
+var user = Parse.User.current();
+    
+    user.fetch().then(function (user) {
+    var events = user.get("events");
+    var startTimes = user.get("startTimes");
+    var endTimes = user.get("endTimes");
+    var addresses = user.get("addresses");
+        for(var i = 0; i < events.length; i++) {
+            console.log(events[i]);
+            document.getElementById("events").innerHTML = document.getElementById("events").innerHTML +
+            "<br>" +
+            "<input type='button-underlined' id='hidden-button' value='" + events[i] + "'>" +
+            // "<br>" +
+            "<h1 id='hidden'>Start times: " + startTimes[i] + "</h1>";
+        }
+        $(document).ready(function(){
+            $("#hidden-button").click(function(){
+                $("#hidden").toggle()
+            })
+        })
+    });
+    
+    function logout(){
+       Parse.User.logOut();
+        location.href = "index.html";
+    }
+
+
+
+</script>
